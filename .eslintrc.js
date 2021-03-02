@@ -1,4 +1,8 @@
 module.exports = {
-  root: true,
-  extends: '@react-native-community',
+    "extends": [
+        "airbnb"
+    ],
+    parser: 'babel-eslint',
+    "rules": {
+    }
 };
