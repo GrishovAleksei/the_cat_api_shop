@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable react-native/no-inline-styles */
+import React, { useEffect } from 'react'
 import {
   Image, View, StyleSheet, FlatList, ActivityIndicator
 } from 'react-native'
 import { connect } from 'react-redux'
 import { fetchFavouritesRequest } from '../ducks/favourites/actions'
-import { favouritesSelector, subIdSelector } from '../ducks/favourites/reducers'
-import Title from '../components/UI/Title'
+import { favouritesSelector } from '../ducks/favourites/reducers'
 import { DEVICE_WIDTH, isIphone } from '../constants/values'
 import Colors from '../constants/colors';
 
 function FavouritesScreen(props) {
   const {
-    subId,
     favourites,
     navigation,
     fetchFavouritesRequest: fetchFavourites
   } = props
-  console.log(subId, favourites)
 
   useEffect(() => {
     navigation.addListener('focus', fetchFavourites)
@@ -46,11 +44,6 @@ function FavouritesScreen(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.backgroundPrimary,
-    paddingTop: isIphone ? STATUS_BAR : 0
-  },
   imageWrapper: {
     margin: 25,
     height: DEVICE_WIDTH - 50,
@@ -62,7 +55,6 @@ const styles = StyleSheet.create({
 
 export default connect((state) => ({
   favourites: favouritesSelector(state),
-  subId: subIdSelector(state),
 }), {
   fetchFavouritesRequest
 })(FavouritesScreen);

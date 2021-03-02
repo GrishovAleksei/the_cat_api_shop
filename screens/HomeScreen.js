@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react'
 import { ScrollView, StyleSheet, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { fetchBreedsRequest } from '../ducks/breeds/actions'
 import { breedsSelector } from '../ducks/breeds/reducers'
 import Card from '../components/Card'
 import Colors from '../constants/colors'
-import { isIphone } from '../constants/values'
+import { isIphone, STATUS_BAR } from '../constants/values'
 
 function HomeScreen(props) {
   const {
     breeds,
     navigation,
     fetchBreedsRequest: fetchBreeds,
-  } = props;
+  } = props
 
   useEffect(() => {
     navigation.addListener('focus', fetchBreeds)

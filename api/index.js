@@ -31,5 +31,15 @@ export default {
       }
     });
     return request.post(`${baseUrl}/favourites`, data);
+  },
+
+  fetchRandomImage(breedId) {
+    const request = axios.create({
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': 'DEMO-API-KEY'
+      }
+    });
+    return request.get(`${baseUrl}/images/search?breed_ids=${breedId}&include_breeds=true`);
   }
 }

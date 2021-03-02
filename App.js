@@ -6,12 +6,14 @@ import MainNavigator from './navigation/index'
 import rootSaga from './ducks/saga'
 import breedsReducer from './ducks/breeds/reducers'
 import favouritesReducer from './ducks/favourites/reducers'
+import imagesReducer from './ducks/images/reducers'
 
 const sagaMiddleware = createSagaMiddleware()
 
 const rootReducer = combineReducers({
   breeds: breedsReducer,
   favourites: favouritesReducer,
+  images: imagesReducer,
 });
 const store = createStore(
   rootReducer,
@@ -24,5 +26,5 @@ export default function App() {
     <Provider store={store}>
       <MainNavigator />
     </Provider>
-  );
-};
+  )
+}

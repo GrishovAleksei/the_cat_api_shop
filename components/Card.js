@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import {
   TouchableOpacity,
@@ -15,17 +16,18 @@ export default function Card({ breed, onPress }) {
       style={[styles.container, styles.shadow]}
       onPress={() => onPress(breed)}
     >
-      <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+      <View style={styles.columnLeft}>
         <Image
+          // eslint-disable-next-line react-native/no-inline-styles
           style={{ width: '100%', height: '100%' }}
           source={{
             uri: breed.image?.url,
           }}
         />
       </View> 
-      <View style={{ flex: 2, margin: 16, flexDirection: 'column', justifyContent: 'space-between' }}>
+      <View style={styles.columnRight}>
         <Title title={breed.name} />
-        <Subtitle title={'Taking care of a pet is my favorite, it helps me to...'} />
+        <Subtitle title={breed.description.slice(0, 60)+'...'} />
       </View>
     </TouchableOpacity>
   );
@@ -41,13 +43,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     overflow: 'hidden',
   },
-  shadow: {
-    shadowColor: 'rgba(170, 170, 204, 0.5)',
-    shadowRadius: 20,
-    shadowOffset: {
-      height: 10,
-      width: 10
-    },
-    elevation: 10,
-  }
+  columnLeft: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  columnRight: {
+    flex: 2,
+    margin: 16,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
 })

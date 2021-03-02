@@ -1,28 +1,42 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
 import {
   View, StyleSheet, Image, ScrollView
 } from 'react-native';
 import { connect } from 'react-redux';
 import { postFavouriteRequest } from '../ducks/favourites/actions'
+import {
+  fetchRandomImageRequest, removeTempImage
+} from '../ducks/images/actions'
+import { randomImageSelector } from '../ducks/images/reducers'
 import HeaderNavigation from '../components/UI/NavBar'
 import Title from '../components/UI/Title'
 import Subtitle from '../components/UI/Subtitle'
 import Button from '../components/UI/Button'
 import Colors from '../constants/colors'
-import { DEVICE_WIDTH, isIphone } from '../constants/values'
+import { DEVICE_WIDTH } from '../constants/values'
 
 function BreedScreen(props) {
   const {
+    image,
     route,
     navigation,
+    removeTempImage: unsubscribe,
     postFavouriteRequest: postFavourite,
+    fetchRandomImageRequest: getRandomImage
   } = props
-  const { breed } = route.params 
-  const subscribe = () => {
-    console.warn(breed.image.id)
-    postFavourite(breed.image.id)
+  const { breed } = route.params
+  const [uri, setUri] = useState(null)
+  useEffect(() => {
+    setUri(image?.url || breed.image.url)
+  },[image])
+  const subscribe = () => postFavourite(image.id || breed.image.id)
+  const getRandomPhoto = () => getRandomImage(breed.id)
+  const onBackPress = () => {
+    navigation.goBack()
+    unsubscribe()
   }
-  const onBackPress = () => navigation.goBack()
   return (
     <HeaderNavigation onBackPress={onBackPress}>
       <ScrollView
@@ -33,7 +47,7 @@ function BreedScreen(props) {
           <Image
             style={{ width: '100%', height: '100%' }}
             source={{
-              uri: breed.image.url,
+              uri: uri,
             }}
           />
         </View>
@@ -45,7 +59,7 @@ function BreedScreen(props) {
           />
         </View>
         <View style={styles.row}>
-          <Button title="Другие фото" onPress={() => console.log('a')} />
+          <Button title="Другие фото" onPress={getRandomPhoto} />
           <Button title="Добавить в избранное" onPress={subscribe} />
         </View>
       </ScrollView>
@@ -54,26 +68,12 @@ function BreedScreen(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.backgroundPrimary,
-    paddingTop: isIphone ? STATUS_BAR : 0
-  },
   imageWrapper: {
     margin: 25,
     height: DEVICE_WIDTH - 50,
     borderRadius: 16,
     backgroundColor: Colors.subPrimary,
     overflow: 'hidden',
-  },
-  shadow: {
-    shadowColor: 'rgba(170, 170, 204, 0.5)',
-    shadowRadius: 20,
-    shadowOffset: {
-      height: 10,
-      width: 10
-    },
-    elevation: 10,
   },
   row: {
     flexDirection: 'row',
@@ -83,7 +83,9 @@ const styles = StyleSheet.create({
 });
 
 export default connect((state) => ({
- 
+  image: randomImageSelector(state),
 }), {
+  removeTempImage,
   postFavouriteRequest,
+  fetchRandomImageRequest,
 })(BreedScreen);

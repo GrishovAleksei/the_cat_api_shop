@@ -8,7 +8,7 @@ import {
     POST_FAVOURITE_BREED_SUCCESS,
   } from './constants';
   import apiService from '../../api';
-  const subId = 'AlexDemo2021'
+  const subId = 'AlexDemo20210302'
 
   export const fetchFavouritesRequestSaga = function* () {
     try {
@@ -25,12 +25,10 @@ import {
   export const postFavouriteBreedRequestSaga = function* ({ payload }) {
     const data = {
       image_id: payload,
-	    sub_id: subId
+      sub_id: subId
     }
-    console.log(data)
     try {
       const request = yield call(apiService.postFavourites, data);
-      console.log('REQUEST ----> ', request.data)
       yield put({
         type: POST_FAVOURITE_BREED_SUCCESS,
         payload: request.data.id
