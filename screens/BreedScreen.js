@@ -31,7 +31,7 @@ function BreedScreen(props) {
   useEffect(() => {
     setUri(image?.url || breed.image.url)
   },[image])
-  const subscribe = () => postFavourite(image.id || breed.image.id)
+  const subscribe = () => postFavourite(image?.id || breed.image.id)
   const getRandomPhoto = () => getRandomImage(breed.id)
   const onBackPress = () => {
     navigation.goBack()
