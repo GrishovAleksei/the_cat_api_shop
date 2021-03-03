@@ -27,8 +27,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   title: {
-    fontFamily: 'Avenir Roman',
-    fontStyle: 'normal',
     fontSize: 14,
     color: Colors.primary,
     marginVertical: 10,

@@ -18,8 +18,6 @@ export default function Title({ title, margin }) {
 
 const styles = StyleSheet.create({
   title: {
-    fontFamily: 'Lato-Bold',
-    fontStyle: 'normal',
     fontSize: 20,
     color: '#333333'
   }

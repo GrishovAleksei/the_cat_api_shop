@@ -18,9 +18,7 @@ export default function Subtitle({ title, margin }) {
 
 const styles = StyleSheet.create({
   title: {
-    fontFamily: 'Avenir Roman',
     fontSize: 14,
-    fontStyle: 'normal',
     fontWeight: '500',
     color: '#4F4F4F',
   }
